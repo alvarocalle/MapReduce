@@ -14,33 +14,29 @@ Python MapReduce Framework
 You will be provided with a python library called MapReduce.py that implements the MapReduce programming model. The framework faithfully implements the MapReduce programming model, but it executes entirely on a single machine -- it does not involve parallel computation.
 
 Here is the word count example discussed in class implemented as a MapReduce program using the framework:
--------------------------------------------------
-# Part 1
-mr = MapReduce.MapReduce()
 
-# Part 2
-def mapper(record):
-    # key: document identifier
-    # value: document contents
-    key = record[0]
-    value = record[1]
-    words = value.split()
-    for w in words:
-      mr.emit_intermediate(w, 1)
-
-# Part 3
-def reducer(key, list_of_values):
-    # key: word
-    # value: list of occurrence counts
-    total = 0
-    for v in list_of_values:
-      total += v
-    mr.emit((key, total))
-
-# Part 4
-inputdata = open(sys.argv[1])
-mr.execute(inputdata, mapper, reducer)
--------------------------------------------------
+    # Part 1
+    mr = MapReduce.MapReduce()
+    # Part 2
+    def mapper(record):
+        # key: document identifier
+        # value: document contents
+        key = record[0]
+        value = record[1]
+        words = value.split()
+        for w in words:
+            mr.emit_intermediate(w, 1)
+    # Part 3
+    def reducer(key, list_of_values):
+        # key: word
+        # value: list of occurrence counts
+        total = 0
+        for v in list_of_values:
+            total += v
+        mr.emit((key, total))
+    # Part 4
+    inputdata = open(sys.argv[1])
+    mr.execute(inputdata, mapper, reducer)
 
 In Part 1, we create a MapReduce object that is used to pass data between the map function and the reduce function; you won’t need to use this object directly.
 
